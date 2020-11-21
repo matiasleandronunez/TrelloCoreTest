@@ -1,0 +1,18 @@
+{
+  "TESTDATA": {
+    "Preconditions": {
+      "Board1ToCreate": "UI AutomationTest",
+      "Board1ListsToCreate": [ "List 1", "List 2", "List 3" ]
+    },
+    "TrelloTestFeature": {
+      "CreateANewCardInABoard": {
+        "CardName": "Some Card Title"
+      }
+    },
+    "APITestFeature": {
+      "CreateANewCardInABoardThroughTheAPI": {
+        "CardName": "API created card title"
+      }
+    }
+  }
+}

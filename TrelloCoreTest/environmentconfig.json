@@ -1,0 +1,21 @@
+{
+  "appSettings": {
+    "BASE_URL": "https://trello.com"
+  },
+  "users": {
+    "admin": {
+      "UserName": "",
+      "Email": "",
+      "Password": ""
+    }
+  },
+  "api": {
+    "uri": "https://api.trello.com",
+    "key": "",
+    "token": "",
+    "oauthsecret": ""
+  },
+  "browser": [
+
+  ]
+}
