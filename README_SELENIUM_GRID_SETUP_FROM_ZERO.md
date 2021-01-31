@@ -22,9 +22,9 @@ https://docs.docker.com/get-started/overview/
 
 a Dockerfile is a plain text (no extension, must be named Dockerfile) that has a sequence of commands from which an image will be built. This image will be deployed into a container, and works as a template. Can be used to deploy as many containers as the user needs. 
 
-`#docker-compose.yaml`
+## docker-compose.yml
 
-A yaml file that is named docker-compose. It has environment settings, dependencies and execution order for a whole infrastructure of docker containers to be deployed.  
+A yml / yaml file that is named docker-compose. It has environment settings, dependencies and execution order for a whole infrastructure of docker containers to be deployed.  
 
 ## Purpose of this document
 
