@@ -1,6 +1,6 @@
-##Before starting
+# Before starting
 
-#What is Selenium Grid?
+## What is Selenium Grid?
 
 Selenium Grid allows the execution of WebDriver scripts on remote machines (virtual or real) by routing commands sent by the client to remote browser instances. It aims to provide an easy way to run tests in parallel on multiple machines.
 
@@ -10,7 +10,7 @@ Selenium Grid allows us to run tests in parallel on multiple machines, and to ma
 
 Selenium grid 3 was used for this setup, but at the time of writing Selenium Grid 4 was in alpha.
 
-#What is Docker?
+## What is Docker?
 
 Intro
 
@@ -18,47 +18,48 @@ Docker is an open platform for developing, shipping, and running applications. D
 
 https://docs.docker.com/get-started/overview/
 
-#Dockerfile
+## Dockerfile
 
 a Dockerfile is a plain text (no extension, must be named Dockerfile) that has a sequence of commands from which an image will be built. This image will be deployed into a container, and works as a template. Can be used to deploy as many containers as the user needs. 
 
-#docker-compose.yaml
+`#docker-compose.yaml`
 
 A yaml file that is named docker-compose. It has environment settings, dependencies and execution order for a whole infrastructure of docker containers to be deployed.  
 
-#Purpose of this document
+## Purpose of this document
 
 For the reader to be able to understand how to set up and deploy a testing grid / lab to be user in both automated and manual testing. 
 
-##Requirements
+# Requirements
 
 Android emulators require a Linux x64 host to work. Base OS used for all that follows was Ubuntu 20.04 LTS, available at https://releases.ubuntu.com/20.04/
 
-#Set up
+# Set up
 
-Installing docker
+### Installing docker
 
 Core installation
 
 The easiest way is by far using the package installer:
-
+```
  $ sudo apt-get update
  $ sudo apt-get install docker-ce docker-ce-cli containerd.io
-
+```
 For alternatives, or installing older versions refer to https://docs.docker.com/engine/install/ubuntu/ (For Ubuntu distro)
 
 Or to https://docs.docker.com/engine/install/ for different OS 
 
-docker-compose command
+### docker-compose command
 
 docker-compose may not be bundled with the engine in Linux. To install this component and be able to use it:
 
 <lastversion> as the time of writing this document is 1.28.0
-
+```
 sudo curl -L "https://github.com/docker/compose/releases/download/<latestversion>/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
-
-#Installing a visual interface for docker
+```
+ 
+### Installing a visual interface for docker
 
 You may need or find useful to have a visual interface for docker. This comes bundled with macOS and Windows versions but for Linux you need to install separately.
 
@@ -68,7 +69,7 @@ Get the latest package for the OS (Ubuntu one is .deb) from  https://github.com/
 
 Then install the package either from GNOME graphical UI or with apt install 
 
-#Building the images
+# Building the images
 
 Most of the images used in this document are maintained by third parties and require no building, they can just be invoked in the compose file. 
 
@@ -76,13 +77,13 @@ But some must be built and stored locally or in a private repository (f.e: Tuned
 
 In order to compose these images, they have to be built first. This is done by building from a dockerfile, using the following command
 
-$ docker build -t mytag .
+`$ docker build -t mytag . `
 
 This will build using the dockerfile in the current location and tag the image as mytag
 
 We can then use this image in the docker-compose or to run it independently as needed
 
-#Base docker repos used
+## Base docker repos used
 
 Base Images used for our Grid come from the official selenium docker ( ) and budtmo’s i ages from the docker-android proyect   which in turn is itself a development from the official appium docker images
 
@@ -90,6 +91,7 @@ The following custom are images currently used in the example:
 
 Android 8.1 image (bundled with chrome 69) with matching 2.41 Chromedriver:
 
+```
 FROM budtmo/docker-android-x86-8.1
 
 USER root
@@ -134,19 +136,21 @@ RUN apt-get update -qqy \
 
 
 USER 1200
+```
 
-##Launching the Grid / Lab
+# Launching the Grid / Lab
 
 Once all images required are build, all that needs to be done is compose with the docker-compose.yaml file. In the directory where the file is, run:
 
-$ docker-compose up
+` $ docker-compose up `
 
 If everything goes as expected, selenium grid and the attached nodes should be up running! This can be verified in the docker GUI.
 
-#Example docker-compose file
+### Example docker-compose file
 
 This docker-compose file uses both custom images build locally and a couple of online image repos. This will launch a grid with Opera 73, Firefox 77, Firefox latest debug version (84 as time of writing), Chrome latest debug version (87 as time of writing), 2 Android emulators at v8.1 and v11.0 and 1 with a real device attached (Real devices require extra setup steps [TBD] )
 
+```
 version: "3"
 
 services:
@@ -354,8 +358,9 @@ services:
       - AUTO_RECORD=true
       - SELENIUM_TIMEOUT=30
       - NO_PROXY="localhost"
+```
 
-##Using the Grid / Lab
+# Using the Grid / Lab
 
 Grid’s natural use is for automation testing. It allows parallel execution and load balancing. With the steps provided however, what was actually build is a debug version which serves better as a testing Lab. 
 
@@ -363,7 +368,7 @@ This is because debug versions include VNC servers for RDP and GUI both not reco
 
 Changing this example from debug to automation use is as simple as modifying built images and retrieved images to their non debug versions and add the variables in the docker-compose for launching multiple instances. 
 
-#Accessing Grid dashboard
+## Accessing Grid dashboard
 
 If everything in the guide went well, then when accessing the hub at http://localhost:4444/grid/console you should see something like:
 
@@ -373,23 +378,23 @@ Android containers use noVNC, can be accessed directly through the browser at th
 
 http://localhost:6080/ and http://localhost:6081/
 
-#VNC Browser containers
+## VNC Browser containers
 
 Debug Browser containers can be accessed with a VNC client by using the port specified during docker-compose. For the example previously provided, these would be ports 5900, 5901, 5902… one assigned to each container
 
 default password is secret
 
-#Useful commands
+## Useful commands
 
-List Containers
+### List Containers
 
 $ docker ps -a -q
 
-Stop all running containers
+### Stop all running containers
 
 $ docker stop $(docker ps -a -q)
 
-Remove all containers
+### Remove all containers
 
 $ docker rm $(docker ps -a -q)
 
