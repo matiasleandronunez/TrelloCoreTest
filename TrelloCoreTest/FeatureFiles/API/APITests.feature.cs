@@ -10,23 +10,21 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
+// Generation customised by SpecFlow.Contrib.Variants
 namespace TrelloCoreTest.FeatureFiles.API
 {
     using TechTalk.SpecFlow;
-    using System;
-    using System.Linq;
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("APITests")]
+    [NUnit.Framework.CategoryAttribute("APIFeature")]
     public partial class APITestsFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
-        
-        private string[] _featureTags = ((string[])(null));
         
 #line 1 "APITests.feature"
 #line hidden
@@ -36,7 +34,8 @@ namespace TrelloCoreTest.FeatureFiles.API
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "FeatureFiles/API", "APITests", "\tIn order to CRUD elements\r\n\tAs a user\r\n\tI want to be able to make calls to trell" +
-                    "o API", ProgrammingLanguage.CSharp, ((string[])(null)));
+                    "o API", ProgrammingLanguage.CSharp, new string[] {
+                        "APIFeature"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -53,7 +52,7 @@ namespace TrelloCoreTest.FeatureFiles.API
         }
         
         [NUnit.Framework.TearDownAttribute()]
-        public virtual void TestTearDown()
+        public virtual void ScenarioTearDown()
         {
             testRunner.OnScenarioEnd();
         }
@@ -75,41 +74,18 @@ namespace TrelloCoreTest.FeatureFiles.API
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Create a new Card in a Board through the API")]
-        [NUnit.Framework.CategoryAttribute("API")]
-        public virtual void CreateANewCardInABoardThroughTheAPI()
+        [NUnit.Framework.DescriptionAttribute("Create a new Card in a Board through the API: Headless")]
+        [NUnit.Framework.CategoryAttribute("Browser:Headless")]
+        public virtual void CreateANewCardInABoardThroughTheAPI_Headless()
         {
-            string[] tagsOfScenario = new string[] {
-                    "API"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new Card in a Board through the API", null, tagsOfScenario, argumentsOfScenario);
-#line 7
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 8
- testRunner.Given("I create a new card in the first list of a board through the api", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 9
- testRunner.Then("the card is successfully created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new Card in a Board through the API", null, new string[] {
+                        "Browser:Headless"}, argumentsOfScenario);
+            this.ScenarioInitialize(scenarioInfo);
+            testRunner.ScenarioContext.Add("Browser", "Headless");
+            this.ScenarioStart();
+            testRunner.Given("I create a new card in the first list of a board through the api", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+            testRunner.Then("the card is successfully created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
             this.ScenarioCleanup();
         }
     }

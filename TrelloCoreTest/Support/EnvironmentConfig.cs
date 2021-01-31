@@ -20,6 +20,9 @@ namespace TrelloCoreTest.Support
         string apikey;
         string apitoken;
         List<string> browser_args;
+        SeleniumGridConfig sgrid;
+        string browserstack_username;
+        string browserstack_automate_key;
 
         EnvironmentConfig()
         {
@@ -36,6 +39,9 @@ namespace TrelloCoreTest.Support
             apitoken = dobj.api.token.ToString();
             oauth = dobj.api.oauthsecret.ToString();
             browser_args = JsonConvert.DeserializeObject<List<string>>(dobj.browser.ToString());
+            browserstack_username = dobj.browserstack.USERNAME.ToString();
+            browserstack_automate_key = dobj.browserstack.AUTOMATE_KEY.ToString();
+            sgrid = JsonConvert.DeserializeObject<SeleniumGridConfig>(dobj.selenium_grid.ToString());
         }
 
         private static readonly object padlock = new object();
@@ -66,6 +72,15 @@ namespace TrelloCoreTest.Support
         public string ApiToken { get => apitoken; set => apitoken = value; }
         public string ApiOAuth { get => oauth; set => oauth = value; }
         public List<string> Browser_args { get => browser_args; set => browser_args = value; }
+        public SeleniumGridConfig SGrid { get => sgrid; set => sgrid = value; }
+        public (string Username, string AutomateKey) BrowserStack
+        {
+            get => (browserstack_username, browserstack_automate_key);
+        }
+    }
 
+    public class SeleniumGridConfig
+    {
+        public Uri RemoteHubURI { get; set; }
     }
 }

@@ -41,6 +41,21 @@ namespace TrelloCoreTest.PageObjects
             }
         }
 
+        //Static variable to be set once for classes inheriting from BasePage after original Open
+        protected static long Browser_width { get; set; }
+        protected void SetBrowserWidth()
+        {
+            try
+            {
+                IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
+                Browser_width = (long)js.ExecuteScript("return $('html > body').width()");
+            }
+            catch (WebDriverException)
+            {
+                Browser_width = _driver.Manage().Window.Size.Width;
+            }
+        }
+
         public virtual void Open(string part = "")
         {
             if (string.IsNullOrEmpty(Url))
@@ -48,8 +63,21 @@ namespace TrelloCoreTest.PageObjects
                 throw new ArgumentException("The main URL cannot be null or empty.");
             }
 
-            _driver.Manage().Window.Maximize();
+            //Method not implemented for some browsers, ignore maximize for those
+            try
+            {
+                _driver.Manage().Window.Maximize();
+            }
+            catch (NotImplementedException)
+            {
+            }
+            catch (WebDriverException)
+            {
+            }
+
             _driver.Navigate().GoToUrl(string.Concat(Url, part));
+
+            SetBrowserWidth();
         }
 
         protected void WaitForAjax()

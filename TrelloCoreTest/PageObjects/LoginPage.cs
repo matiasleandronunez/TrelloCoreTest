@@ -38,6 +38,9 @@ namespace TrelloCoreTest.PageObjects
 
         public void SubmitLogin()
         {
+            //Changed waiting strategy for Trello login box
+            WaitForAjax();
+            _driverWait.Until(div_resized => ElementResizingEnded(email_pass_div) && login_button.Enabled && !password_input.Displayed);
             login_button.Click();
         }
     }

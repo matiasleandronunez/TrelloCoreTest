@@ -17,5 +17,12 @@
   },
   "browser": [
 
-  ]
+  ],
+  "selenium_grid": {
+    "RemoteHubURI": "http://192.168.1.149:4444/wd/hub"
+  },
+  "browserstack": {
+    "USERNAME": "",
+    "AUTOMATE_KEY": ""
+  }
 }
