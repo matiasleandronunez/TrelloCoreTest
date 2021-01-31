@@ -12,3 +12,5 @@ Updated on 21 Nov 2020. Tested with Chrome 87. All dependencies installed from N
 
 # Credentials Cofiguration
 Input your Trello API tokens and the Atlassian managed account for UI login in environmentconfig.json
+
+Now with the multibrowser support, you can also try cloud, grid, different local browsers!
