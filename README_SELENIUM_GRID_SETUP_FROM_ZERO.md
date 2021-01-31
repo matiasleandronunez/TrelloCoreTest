@@ -103,9 +103,9 @@ RUN unzip -o /tmp/chromedriver_linux64.zip -d /root/
 RUN rm /tmp/chromedriver*
 
 RUN adb reconnect
-
+```
 Older Firefox Debug (debug in this case means it has a build it VNC server that allows rdp’ing in with a VNC client):
-
+```
 FROM selenium/node-firefox-debug:3.141.59-20210105
 
 LABEL authors=SeleniumHQ
