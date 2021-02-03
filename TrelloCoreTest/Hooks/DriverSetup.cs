@@ -23,14 +23,14 @@
     [Binding]
     public class DriverSetup
     {
-        private IObjectContainer _objectContainer;
-        private ScenarioContext _scenarioContext;
-        public IWebDriver Driver;
+        private IObjectContainer objectContainer;
+        private ScenarioContext scenarioContext;
+        public readonly IWebDriver Driver;
 
         public DriverSetup(IObjectContainer objectContainer, ScenarioContext scenarioContext)
         {
-            _objectContainer = objectContainer;
-            _scenarioContext = scenarioContext;
+            this.objectContainer = objectContainer;
+            this.scenarioContext = scenarioContext;
         }
 
         [BeforeScenario(Order = -1)]
@@ -38,12 +38,12 @@
         {
             //This pre-requesite step will set options for the various browsers types. As selenium 3, this is per browser. 
             
-            ChromeOptions SetChromeOptions(string[] parameters = null, Dictionary<string, object> extra_additional_caps = null)
+            ChromeOptions SetChromeOptions(string[] parameters = null, Dictionary<string, object> extraAdditionalCaps = null)
             {
-                ChromeOptions options = new ChromeOptions();
+                var options = new ChromeOptions();
 
                 //Set Chrome GeoLocation for an scenario matching the tag
-                if (_scenarioContext.ScenarioInfo.Tags.Any(x => x == "ScenarioThatRequiresGeoLocForInstance"))
+                if (scenarioContext.ScenarioInfo.Tags.Any(x => x == "ScenarioThatRequiresGeoLocForInstance"))
                 {
                     options.AddUserProfilePreference("profile.default_content_setting_values.geolocation", 2);
                 }
@@ -65,9 +65,9 @@
                     options.AddArguments(parameters);
                 }
 
-                if (extra_additional_caps != null)
+                if (extraAdditionalCaps != null)
                 {
-                    foreach (KeyValuePair<string, object> ac in extra_additional_caps)
+                    foreach (KeyValuePair<string, object> ac in extraAdditionalCaps)
                     {
                         options.AddAdditionalCapability(ac.Key, ac.Value);
                     }
@@ -76,9 +76,9 @@
                 return options;
             }
 
-            FirefoxOptions SetFirefoxOptions(string[] parameters= null, Dictionary<string, object> extra_additional_caps = null)
+            FirefoxOptions SetFirefoxOptions(string[] parameters= null, Dictionary<string, object> extraAdditionalCaps = null)
             {
-                FirefoxOptions options = new FirefoxOptions();
+                var options = new FirefoxOptions();
 
                 options.AcceptInsecureCertificates = true;
 
@@ -96,9 +96,9 @@
                     options.AddArguments(parameters);
                 }
 
-                if (extra_additional_caps != null) 
+                if (extraAdditionalCaps != null) 
                 {
-                    foreach (KeyValuePair<string, object> ac in extra_additional_caps)
+                    foreach (KeyValuePair<string, object> ac in extraAdditionalCaps)
                     {
                         options.AddAdditionalCapability(ac.Key, ac.Value);
                     }
@@ -107,9 +107,9 @@
                 return options;
             }
 
-            AppiumOptions SetAndroidWebMobileOptions(string device, string platform_v, string android_v, Dictionary<string, object> extra_additional_caps = null)
+            AppiumOptions SetAndroidWebMobileOptions(string device, string platformVersion, string androidVersion, Dictionary<string, object> extraAdditionalCaps = null)
             {
-                AppiumOptions options = new AppiumOptions();
+                var options = new AppiumOptions();
 
                 options.AddAdditionalCapability(MobileCapabilityType.BrowserName, "chrome");
                 options.AddAdditionalCapability(MobileCapabilityType.PlatformName, MobilePlatform.Android);
@@ -117,12 +117,12 @@
                 options.AddAdditionalCapability(MobileCapabilityType.NoReset, true);
 
                 options.AddAdditionalCapability(MobileCapabilityType.DeviceName, device);
-                options.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, platform_v);
-                options.AddAdditionalCapability("version", android_v);
+                options.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, platformVersion);
+                options.AddAdditionalCapability("version", androidVersion);
 
-                if (extra_additional_caps != null)
+                if (extraAdditionalCaps != null)
                 {
-                    foreach (KeyValuePair<string, object> ac in extra_additional_caps)
+                    foreach (KeyValuePair<string, object> ac in extraAdditionalCaps)
                     {
                         options.AddAdditionalCapability(ac.Key, ac.Value);
                     }
@@ -130,10 +130,10 @@
                 return options;
             }
 
-            OperaOptions SetOperaOptions(string version, string[] parameters = null, Dictionary<string, object> extra_additional_caps = null)
+            OperaOptions SetOperaOptions(string version, string[] parameters = null, Dictionary<string, object> extraAdditionalCaps = null)
             {
 
-                OperaOptions options = new OperaOptions();
+                var options = new OperaOptions();
 
                 options.AddAdditionalCapability("version", version);
 
@@ -142,9 +142,9 @@
                     options.AddArguments(parameters);
                 }
 
-                if (extra_additional_caps != null)
+                if (extraAdditionalCaps != null)
                 {
-                    foreach (KeyValuePair<string, object> ac in extra_additional_caps)
+                    foreach (KeyValuePair<string, object> ac in extraAdditionalCaps)
                     {
                         options.AddAdditionalCapability(ac.Key, ac.Value);
                     }
@@ -152,13 +152,13 @@
                 return options;
             }
 
-            SafariOptions SetSafariOptions(Dictionary<string, object> extra_additional_caps = null)
+            SafariOptions SetSafariOptions(Dictionary<string, object> extraAdditionalCaps = null)
             {
                 SafariOptions options = new SafariOptions();
 
-                if (extra_additional_caps != null)
+                if (extraAdditionalCaps != null)
                 {
-                    foreach (KeyValuePair<string, object> ac in extra_additional_caps)
+                    foreach (KeyValuePair<string, object> ac in extraAdditionalCaps)
                     {
                         options.AddAdditionalCapability(ac.Key, ac.Value);
                     }
@@ -167,7 +167,7 @@
             }
 
             //Gets the browser tag of the test for crossbrowser testing to set options before instantiating driver, defaults to chrome
-            _scenarioContext.TryGetValue("Browser", out var browser);
+            scenarioContext.TryGetValue("Browser", out var browser);
 
             //Switch browser and set options
             //These are examples for local, grid and cloud (Browserstack) browsers 
@@ -185,30 +185,30 @@
                     browserstackOptions.Add("userName", EnvironmentConfig.Instance.BrowserStack.Username);
                     browserstackOptions.Add("accessKey", EnvironmentConfig.Instance.BrowserStack.AutomateKey);
 
-                    _scenarioContext.Add("options", SetSafariOptions(extra_additional_caps:
+                    scenarioContext.Add("options", SetSafariOptions(extraAdditionalCaps:
                             new Dictionary<string, object> { { "bstack:options", browserstackOptions } }
                     ));
                     break;
                 case "Grid_Android_Chrome":
-                    _scenarioContext.Add("options", SetAndroidWebMobileOptions(device: "samsung_galaxy_s10_11.0", platform_v: "11.0.0", android_v: "11.0"));
+                    scenarioContext.Add("options", SetAndroidWebMobileOptions(device: "samsung_galaxy_s10_11.0", platformVersion: "11.0.0", androidVersion: "11.0"));
                     break;
                 case "Grid_OperaBlink":
                     //must use desired capabilities to use custom browser name
-                    DesiredCapabilities grid_operablink_opt = new DesiredCapabilities();
+                    var gridOperaBlinkOptions = new DesiredCapabilities();
 
-                    grid_operablink_opt.SetCapability("browserName", "operablink");
+                    gridOperaBlinkOptions.SetCapability("browserName", "operablink");
 
-                    _scenarioContext.Add("options", grid_operablink_opt);
+                    scenarioContext.Add("options", gridOperaBlinkOptions);
                     break;
                 case "Headless":
-                    _scenarioContext.Add("options", SetChromeOptions(parameters: new string[] {"headless"}));
+                    scenarioContext.Add("options", SetChromeOptions(parameters: new string[] {"headless"}));
                     break;
                 case "Firefox":
-                    _scenarioContext.Add("options", SetFirefoxOptions());
+                    scenarioContext.Add("options", SetFirefoxOptions());
                     break;
                 case "Chrome":
                 default:
-                    _scenarioContext.Add("options", SetChromeOptions());
+                    scenarioContext.Add("options", SetChromeOptions());
                     break;
             }
         }
@@ -219,13 +219,13 @@
             //Set the Driver using the options set in the pre-step
             IWebDriver Driver;
 
-            _scenarioContext.TryGetValue("Browser", out var browser);
+            scenarioContext.TryGetValue("Browser", out var browser);
 
             //Get options by browser, instantiate and register drivers
             switch (browser)
             {
                 case "BrowserStack_iOS11":
-                    SafariOptions bs_ios11 = _scenarioContext.Get<SafariOptions>("options");
+                    var bs_ios11 = scenarioContext.Get<SafariOptions>("options");
 
                     Driver = new RemoteWebDriver(
                             new Uri("https://hub-cloud.browserstack.com/wd/hub/"), bs_ios11);
@@ -239,25 +239,25 @@
 
                     }
 
-                    _objectContainer.RegisterInstanceAs(Driver);
+                    objectContainer.RegisterInstanceAs(Driver);
                     break;
                 case "Grid_Android_Chrome":
-                    AppiumOptions grid_android_chrome = _scenarioContext.Get<AppiumOptions>("options");
+                    var gridAndroidChrome = scenarioContext.Get<AppiumOptions>("options");
 
-                    Driver = new AndroidDriver<IWebElement>(EnvironmentConfig.Instance.SGrid.RemoteHubURI, grid_android_chrome);
+                    Driver = new AndroidDriver<IWebElement>(EnvironmentConfig.Instance.SGrid.RemoteHubURI, gridAndroidChrome);
 
-                    _objectContainer.RegisterInstanceAs(Driver);
+                    objectContainer.RegisterInstanceAs(Driver);
                     break;
                 case "Grid_OperaBlink":
-                    DesiredCapabilities op = _scenarioContext.Get<DesiredCapabilities>("options");
+                    var op = scenarioContext.Get<DesiredCapabilities>("options");
 
                     Driver = new RemoteWebDriver(EnvironmentConfig.Instance.SGrid.RemoteHubURI, op);
 
                     Driver.Manage().Cookies.DeleteAllCookies();
-                    _objectContainer.RegisterInstanceAs(Driver);
+                    objectContainer.RegisterInstanceAs(Driver);
                     break;
                 case "Firefox":
-                    FirefoxOptions ffo = _scenarioContext.Get<FirefoxOptions>("options");
+                    var ffo = scenarioContext.Get<FirefoxOptions>("options");
 
                     //Known issue with geckodriver and Net Core, refer to: https://stackoverflow.com/questions/53629542/selenium-geckodriver-executes-findelement-10-times-slower-than-chromedriver-ne
                     var svc = FirefoxDriverService.CreateDefaultService();
@@ -266,17 +266,17 @@
                     Driver = new FirefoxDriver(svc, ffo);
 
                     Driver.Manage().Cookies.DeleteAllCookies();
-                    _objectContainer.RegisterInstanceAs(Driver);
+                    objectContainer.RegisterInstanceAs(Driver);
                     break;
                 case "Chrome":
                 case "Headless":
                 default:
-                    ChromeOptions co = _scenarioContext.Get<ChromeOptions>("options");
+                    var co = scenarioContext.Get<ChromeOptions>("options");
 
                     Driver = new ChromeDriver(co);
 
                     Driver.Manage().Cookies.DeleteAllCookies();
-                    _objectContainer.RegisterInstanceAs(Driver);
+                    objectContainer.RegisterInstanceAs(Driver);
                     break;
             }
         }
@@ -286,7 +286,7 @@
         [BeforeScenario(Order = 0)]
         public void ScenariosWithPendingTicketsOrNotImplementedYet()
         {
-            if (_scenarioContext.ScenarioInfo.Tags.Any(x => x == "ScenariosFailingBecauseOfExternalFactorsOrPendingFixes"))
+            if (scenarioContext.ScenarioInfo.Tags.Any(x => x == "ScenariosFailingBecauseOfExternalFactorsOrPendingFixes"))
             {
                 Assert.Ignore("Scenario tagged as Pending Ticket or still not implemented");
             }

@@ -11,36 +11,36 @@ namespace TrelloCoreTest.Support
 {
     public sealed class EnvironmentConfig
     {
-        string base_url;
-        string username;
-        string adminuser;
-        string adminpassword;
-        string api_uri;
+        string baseUrl;
+        string userName;
+        string adminUser;
+        string adminPassword;
+        string apiUri;
         string oauth;
-        string apikey;
-        string apitoken;
-        List<string> browser_args;
+        string apiKey;
+        string apiToken;
+        List<string> browserArgs;
         SeleniumGridConfig sgrid;
-        string browserstack_username;
-        string browserstack_automate_key;
+        string browserstackUserName;
+        string browserstackAutomateKey;
 
         EnvironmentConfig()
         {
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase).Replace("\\bin\\Debug\\netcoreapp3.1", "");
-            string data = System.IO.File.ReadAllText(new Uri($"{path}\\environmentconfig.json").LocalPath);
+            var data = System.IO.File.ReadAllText(new Uri($"{path}\\environmentconfig.json").LocalPath);
             var dobj = JsonConvert.DeserializeObject<dynamic>(data);
 
-            base_url = dobj.appSettings.BASE_URL.ToString();
-            adminuser = dobj.users.admin.Email.ToString();
-            username = dobj.users.admin.UserName.ToString();
-            adminpassword = dobj.users.admin.Password.ToString();
-            api_uri = dobj.api.uri.ToString();
-            apikey = dobj.api.key.ToString();
-            apitoken = dobj.api.token.ToString();
+            baseUrl = dobj.appSettings.BASE_URL.ToString();
+            adminUser = dobj.users.admin.Email.ToString();
+            userName = dobj.users.admin.UserName.ToString();
+            adminPassword = dobj.users.admin.Password.ToString();
+            apiUri = dobj.api.uri.ToString();
+            apiKey = dobj.api.key.ToString();
+            apiToken = dobj.api.token.ToString();
             oauth = dobj.api.oauthsecret.ToString();
-            browser_args = JsonConvert.DeserializeObject<List<string>>(dobj.browser.ToString());
-            browserstack_username = dobj.browserstack.USERNAME.ToString();
-            browserstack_automate_key = dobj.browserstack.AUTOMATE_KEY.ToString();
+            browserArgs = JsonConvert.DeserializeObject<List<string>>(dobj.browser.ToString());
+            browserstackUserName = dobj.browserstack.USERNAME.ToString();
+            browserstackAutomateKey = dobj.browserstack.AUTOMATE_KEY.ToString();
             sgrid = JsonConvert.DeserializeObject<SeleniumGridConfig>(dobj.selenium_grid.ToString());
         }
 
@@ -61,21 +61,21 @@ namespace TrelloCoreTest.Support
             }
         }
 
-        public string Base_url { get => base_url; set => base_url = value; }
-        public string Username { get => username; set => username = value; }
+        public string Base_url { get => baseUrl; set => baseUrl = value; }
+        public string Username { get => userName; set => userName = value; }
         public (string Username, string Password) AdminUser
         {
-            get => (adminuser, adminpassword);
+            get => (adminUser, adminPassword);
         }
-        public string Api_uri { get => api_uri; set => api_uri = value; }
-        public string ApiKey { get => apikey; set => apikey = value; }
-        public string ApiToken { get => apitoken; set => apitoken = value; }
+        public string Api_uri { get => apiUri; set => apiUri = value; }
+        public string ApiKey { get => apiKey; set => apiKey = value; }
+        public string ApiToken { get => apiToken; set => apiToken = value; }
         public string ApiOAuth { get => oauth; set => oauth = value; }
-        public List<string> Browser_args { get => browser_args; set => browser_args = value; }
+        public List<string> Browser_args { get => browserArgs; set => browserArgs = value; }
         public SeleniumGridConfig SGrid { get => sgrid; set => sgrid = value; }
         public (string Username, string AutomateKey) BrowserStack
         {
-            get => (browserstack_username, browserstack_automate_key);
+            get => (browserstackUserName, browserstackAutomateKey);
         }
     }
 
