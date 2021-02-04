@@ -27,21 +27,37 @@ namespace TrelloCoreTest.Support
         EnvironmentConfig()
         {
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase).Replace("\\bin\\Debug\\netcoreapp3.1", "");
-            var data = System.IO.File.ReadAllText(new Uri($"{path}\\environmentconfig.json").LocalPath);
-            var dobj = JsonConvert.DeserializeObject<dynamic>(data);
 
-            baseUrl = dobj.appSettings.BASE_URL.ToString();
-            adminUser = dobj.users.admin.Email.ToString();
-            userName = dobj.users.admin.UserName.ToString();
-            adminPassword = dobj.users.admin.Password.ToString();
-            apiUri = dobj.api.uri.ToString();
-            apiKey = dobj.api.key.ToString();
-            apiToken = dobj.api.token.ToString();
-            oauth = dobj.api.oauthsecret.ToString();
-            browserArgs = JsonConvert.DeserializeObject<List<string>>(dobj.browser.ToString());
-            browserstackUserName = dobj.browserstack.USERNAME.ToString();
-            browserstackAutomateKey = dobj.browserstack.AUTOMATE_KEY.ToString();
-            sgrid = JsonConvert.DeserializeObject<SeleniumGridConfig>(dobj.selenium_grid.ToString());
+            try
+            {
+                var dobj = JsonConvert.DeserializeObject<dynamic>(
+                    System.IO.File.ReadAllText(new Uri($"{path}\\environmentconfig.json").LocalPath));
+
+                baseUrl = dobj.appSettings.BASE_URL.ToString();
+                adminUser = dobj.users.admin.Email.ToString();
+                userName = dobj.users.admin.UserName.ToString();
+                adminPassword = dobj.users.admin.Password.ToString();
+                apiUri = dobj.api.uri.ToString();
+                apiKey = dobj.api.key.ToString();
+                apiToken = dobj.api.token.ToString();
+                oauth = dobj.api.oauthsecret.ToString();
+                browserArgs = JsonConvert.DeserializeObject<List<string>>(dobj.browser.ToString());
+                browserstackUserName = dobj.browserstack.USERNAME.ToString();
+                browserstackAutomateKey = dobj.browserstack.AUTOMATE_KEY.ToString();
+                sgrid = JsonConvert.DeserializeObject<SeleniumGridConfig>(dobj.selenium_grid.ToString());
+
+                /* Check for required fields and throw a user friendly message if something is missing. 
+                  Added this in case someone downloads and runs the tests without reading docs, as the JSON exception 
+                  is kind of cryptic */
+                if (new List<String>{baseUrl, adminUser, userName, adminPassword, apiUri, apiKey, apiToken, oauth}.Any(x => String.IsNullOrEmpty(x)))
+                {
+                    throw new Exception(message: "Seems like some required values are missing in environmentconfig.json. Please refer to the README.md at https://github.com/matiasleandronunez/TrelloCoreTest");
+                }
+            }
+            catch (JsonReaderException e)
+            {
+                throw new Exception(message: "Seems like the environmentconfig.json is either absent, empty or bad formated. Please refer to the README.md at https://github.com/matiasleandronunez/TrelloCoreTest", innerException: e);
+            }
         }
 
         private static readonly object padlock = new object();

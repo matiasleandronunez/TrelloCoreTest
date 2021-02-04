@@ -20,13 +20,21 @@ namespace TrelloCoreTest.Support
         DataDrivenTestHelper()
         {
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase).Replace("\\bin\\Debug\\netcoreapp3.1", "");
-            string data = System.IO.File.ReadAllText(new Uri($"{path}\\testdata.json").LocalPath);
-            var dobj = JsonConvert.DeserializeObject<dynamic>(data);
 
-            board1ToCreate = dobj.TESTDATA.Preconditions.Board1ToCreate.ToString();
-            board1ListsToCreate = JsonConvert.DeserializeObject<List<string>>(dobj.TESTDATA.Preconditions.Board1ListsToCreate.ToString());
-            cardToCreate = dobj.TESTDATA.TrelloTestFeature.CreateANewCardInABoard.CardName.ToString();
-            apiCardToCreate = dobj.TESTDATA.APITestFeature.CreateANewCardInABoardThroughTheAPI.CardName.ToString();
+            try
+            {
+                var dobj = JsonConvert.DeserializeObject<dynamic>(
+                    System.IO.File.ReadAllText(new Uri($"{path}\\testdata.json").LocalPath));
+
+                board1ToCreate = dobj.TESTDATA.Preconditions.Board1ToCreate.ToString();
+                board1ListsToCreate = JsonConvert.DeserializeObject<List<string>>(dobj.TESTDATA.Preconditions.Board1ListsToCreate.ToString());
+                cardToCreate = dobj.TESTDATA.TrelloTestFeature.CreateANewCardInABoard.CardName.ToString();
+                apiCardToCreate = dobj.TESTDATA.APITestFeature.CreateANewCardInABoardThroughTheAPI.CardName.ToString();
+            }
+            catch (JsonReaderException e)
+            {
+                throw new Exception(message: "testdata.json is either absent, missing values, empty or bad formated.", innerException: e);
+            }
         }
 
         private static readonly object padlock = new object();
