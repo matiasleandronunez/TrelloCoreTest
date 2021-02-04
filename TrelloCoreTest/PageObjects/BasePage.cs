@@ -20,16 +20,26 @@ namespace TrelloCoreTest.PageObjects
             driverWait = new WebDriverWait(driver, new System.TimeSpan(0, 0, 0, 30, 0));
         }
 
+        /// <summary>
+        /// Validates the page displayed by the browser matches the Page Object element in use. If not overriden by a PO's particular implementation, it will only wait and check for the URI to match the Base URI of that particular page
+        /// </summary>
+        /// <returns>
+        /// bool indicating page is loaded
+        /// </returns>
         public virtual bool ValidatePage()
         {
-            /// <summary>Validates the page displayed by the browser matches the Page Object element in use. If not overriden by a PO's particular implementation, it will only wait and check for the URI to match the Base URI of that particular page</summary>
             //if current URI without parameters matches base URI
             return driverWait.Until(url => driver.Url.Split('?')[0] == Url);
         }
 
+        /// <summary>
+        /// Returns pages name for reference. If not overriden returns Class name instead.
+        /// </summary>
+        /// <returns>
+        /// Page object name as string
+        /// </returns>
         public virtual string PageName()
         {
-            /// <summary>Returns pages name for reference. If not overriden returns Class name instead.</summary>
             return this.GetType().Name;
         }
 
@@ -43,6 +53,7 @@ namespace TrelloCoreTest.PageObjects
 
         //Static variable to be set once for classes inheriting from BasePage after original Open
         protected static long browserWidth { get; set; }
+        
         protected void SetBrowserWidth()
         {
             try

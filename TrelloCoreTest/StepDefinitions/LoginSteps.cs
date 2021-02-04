@@ -36,6 +36,7 @@ namespace TrelloCoreTest.StepDefinitions
             GivenINavigateToPage();
 
             LoginPage.InputEmail(admin.Username);
+
             //Removed as new Trello login flow requires Atlassian SSO
             //LoginPage.InputPassword(admin.Password);
             

@@ -71,7 +71,7 @@ namespace TrelloCoreTest.Support
         public string ApiKey { get => apiKey; set => apiKey = value; }
         public string ApiToken { get => apiToken; set => apiToken = value; }
         public string ApiOAuth { get => oauth; set => oauth = value; }
-        public List<string> Browser_args { get => browserArgs; set => browserArgs = value; }
+        public List<string> BrowserArgs { get => browserArgs; set => browserArgs = value; }
         public SeleniumGridConfig SGrid { get => sgrid; set => sgrid = value; }
         public (string Username, string AutomateKey) BrowserStack
         {

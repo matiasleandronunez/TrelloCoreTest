@@ -24,8 +24,12 @@ namespace TrelloCoreTest.StepDefinitions
         [When(@"I create a card in the first left hand side list")]
         public void WhenIOpenATrelloBoard()
         {
-            scenarioContext.Add("UsedListName", BoardMainPage.GetFirstLeftHandSideListName()); // Save left hand side list name for verification at the end
-            scenarioContext.Add("UsedCardName", DataDrivenTestHelper.Instance.CardToCreate); // Get the name set in the json data field into the scenario context
+            // Save left hand side list name for verification at the end
+            scenarioContext.Add("UsedListName", BoardMainPage.GetFirstLeftHandSideListName());
+
+            /* Get the name set in the json data field into the scenario context and appends randomized name to allow validating
+               different scenarios when there's parallel execution of the same test. */
+            scenarioContext.Add("UsedCardName", $"{DataDrivenTestHelper.Instance.CardToCreate}{GenericUtils.RandomString()}"); 
 
             BoardMainPage.AddCardToList(scenarioContext.Get<string>("UsedCardName"));
         }
@@ -35,7 +39,9 @@ namespace TrelloCoreTest.StepDefinitions
         {
             var cardsDisplayed = BoardMainPage.GetAllCardTitlesInList(scenarioContext.Get<string>("UsedListName"));
 
-            CollectionAssert.Contains(cardsDisplayed, scenarioContext.Get<string>("UsedCardName"), "Card is not within the list");
+            var cardUsed = scenarioContext.Get<string>("UsedCardName");
+
+            CollectionAssert.Contains(cardsDisplayed, cardUsed, $"Card {cardUsed} is not within the list");
         }
 
 

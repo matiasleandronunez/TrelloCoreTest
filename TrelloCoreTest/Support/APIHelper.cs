@@ -27,8 +27,15 @@ namespace TrelloCoreTest.Support
             return $"key={EnvironmentConfig.Instance.ApiKey}&token={EnvironmentConfig.Instance.ApiToken}";
         }
 
-        /// <summary>Creates a new board with the name specified. No Predefined lists. Other parameters are harcoded to use defaults (same as in the api sample).</summary>
-        /// 
+        /// <summary>
+        /// Creates a new board with the name specified. No Predefined lists. Other parameters are harcoded to use defaults (same as in the api sample).
+        /// </summary>
+        /// <param name="name">
+        /// Name if the board to create
+        /// </param>
+        /// <returns>
+        /// created Board's ID 
+        /// </returns>
         public string CreateBoard(string name)
         {
             var request = new RestRequest($"/1/boards/?name={Uri.EscapeUriString(name)}&defaultLabels=true&defaultLists=false&keepFromSource=none&prefs_permissionLevel=private&prefs_voting=disabled&prefs_comments=members&prefs_invitations=members&prefs_selfJoin=true&prefs_cardCovers=true&prefs_background=blue&prefs_cardAging=regular&{AuthenticationString()}", Method.POST);
@@ -38,8 +45,12 @@ namespace TrelloCoreTest.Support
             return GetBoardIdByName(name);
         }
 
-        /// <summary>Returns a list with all boards accessible to the current user</summary>
-        /// 
+        /// <summary>
+        /// Returns a list with all boards accessible to the current user
+        /// </summary>
+        /// <returns>
+        /// All boards as a list
+        /// </returns>
         public List<Board> GetAllBoards()
         {
             var request = new RestRequest($"/1/members/me/boards?{AuthenticationString()}",
@@ -53,8 +64,15 @@ namespace TrelloCoreTest.Support
             return JsonConvert.DeserializeObject<List<Board>>(response.Content);
         }
 
-        /// <summary>Get a board id searching by name</summary>
-        /// 
+        /// <summary>
+        /// Get a board id searching by name
+        /// </summary>
+        /// <param name="name">
+        /// Board's name
+        /// </param>
+        /// <returns>
+        /// Board's ID
+        /// </returns>
         public string GetBoardIdByName(string name)
         {
             return GetAllBoards().Find(b => b.name.Equals(name)).id;

@@ -16,16 +16,16 @@ namespace TrelloCoreTest.PageObjects
         {
         }
 
-        public IWebElement all_boards_div => driverWait.Until(e => driver.FindElement(By.CssSelector("div.content-all-boards")));
+        public IWebElement allBoardsDiv => driverWait.Until(e => driver.FindElement(By.CssSelector("div.content-all-boards")));
 
         public override void Open(string part = "/boards")
         {
             base.Open($"/{EnvironmentConfig.Instance.Username}/{part}");
         }
 
-        public void ClickOnBoard(string board_name)
+        public void ClickOnBoard(string boardName)
         {
-            driverWait.Until(board => all_boards_div.FindElements(By.CssSelector($"a.board-tile[href$='/{Regex.Replace(board_name, @"\s", "-").ToLower()}']")))
+            driverWait.Until(board => allBoardsDiv.FindElements(By.CssSelector($"a.board-tile[href$='/{Regex.Replace(boardName, @"\s", "-").ToLower()}']")))
                 .First()
                 .Click();
         }

@@ -15,8 +15,8 @@ namespace TrelloCoreTest.PageObjects
         {
         }
 
-        public IReadOnlyCollection<IWebElement> all_lists_div => driverWait.Until(e => driver.FindElements(By.CssSelector("div.js-list-content")));
-        public IWebElement board_canvas_div => driverWait.Until(e => driver.FindElement(By.CssSelector("div.board-canvas")));
+        public IReadOnlyCollection<IWebElement> allListsDiv => driverWait.Until(e => driver.FindElements(By.CssSelector("div.js-list-content")));
+        public IWebElement boardCanvasDiv => driverWait.Until(e => driver.FindElement(By.CssSelector("div.board-canvas")));
 
         public string GetFirstLeftHandSideListName()
         {
@@ -27,41 +27,48 @@ namespace TrelloCoreTest.PageObjects
 
         public IWebElement GetFirstLeftHandSideList()
         {
-            driverWait.Until(lists_loaded => all_lists_div.Count != 0);
+            driverWait.Until(listsLoaded => allListsDiv.Count != 0);
 
-            return all_lists_div
+            return allListsDiv
                 .First();
         }
 
-        public IWebElement GetListByName(string lname)
+        public IWebElement GetListByName(string lName)
         {
-            return driverWait.Until(list => board_canvas_div.FindElement(By.XPath($".//textarea[text()='{lname}']/ancestor::div[contains(@class,'js-list-content')]")));
+            return driverWait.Until(list => boardCanvasDiv.FindElement(By.XPath($".//textarea[text()='{lName}']/ancestor::div[contains(@class,'js-list-content')]")));
         }
 
-        public void AddCardToList(string card_title, string list_name = null)
+        ///<summary>
+        ///Adds a card to a list. If no list is specified it'll use the first left hand side list displayed in the board
+        ///</summary>
+        ///<param name="cardTitle">Card title to add</param>
+        ///<param name="listName">Optional, the list name where to add the card</param>
+        ///<returns></returns>
+        public void AddCardToList(string cardTitle, string listName = null)
         {
-            /// Adds a card to a list. If no list is specified it'll use the first left hand side list displayed in the board
-            /// 
-            IWebElement list_wrapper = !String.IsNullOrEmpty(list_name) ? GetListByName(list_name) : GetFirstLeftHandSideList();
+            var listWrapper = !String.IsNullOrEmpty(listName) ? GetListByName(listName) : GetFirstLeftHandSideList();
 
-            list_wrapper
+            listWrapper
                     .FindElement(By.CssSelector("a.open-card-composer"))
                     .Click();
 
-            driverWait.Until(input_rdy => list_wrapper.FindElement(By.CssSelector("textarea.list-card-composer-textarea")))
-                .SendKeys(card_title);
+            driverWait.Until(inputRdy => listWrapper.FindElement(By.CssSelector("textarea.list-card-composer-textarea")))
+                .SendKeys(cardTitle);
 
-            driverWait.Until(button => list_wrapper.FindElement(By.CssSelector("input.js-add-card")))
+            driverWait.Until(button => listWrapper.FindElement(By.CssSelector("input.js-add-card")))
                 .Click();
         }
 
-        public List<string> GetAllCardTitlesInList(string list_name)
+        ///<summary>
+        ///Return a list of all card titles displayed within a list
+        ///</summary>
+        ///<param name="listName">List name from which to retrieve cards</param>
+        ///<returns>Card names within the list as string's list</returns>
+        public List<string> GetAllCardTitlesInList(string listName)
         {
-            /// Return a list of all card titles displayed within a list
-            /// 
-            var cards = driverWait.Until(cs => GetListByName(list_name).FindElements(By.CssSelector("a.list-card")));
+            var cards = driverWait.Until(cs => GetListByName(listName).FindElements(By.CssSelector("a.list-card")));
 
-            return cards.Select(c_title => c_title.FindElement(By.CssSelector("span.list-card-title")).Text)
+            return cards.Select(cTitle => cTitle.FindElement(By.CssSelector("span.list-card-title")).Text)
                 .ToList<string>();
         }
     }

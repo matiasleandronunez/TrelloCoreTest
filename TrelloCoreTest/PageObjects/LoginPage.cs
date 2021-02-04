@@ -14,10 +14,10 @@ namespace TrelloCoreTest.PageObjects
         {
         }
 
-        public IWebElement email_input => driverWait.Until(e => driver.FindElement(By.CssSelector("input#user")));
-        public IWebElement password_input => driverWait.Until(e => driver.FindElement(By.CssSelector("input#password")));
-        public IWebElement login_button => driverWait.Until(e => driver.FindElement(By.CssSelector("input#login")));
-        public IWebElement email_pass_div => driverWait.Until(e => driver.FindElement(By.CssSelector("div.login-password-container-email")));
+        public IWebElement emailInput => driverWait.Until(e => driver.FindElement(By.CssSelector("input#user")));
+        public IWebElement passwordInput => driverWait.Until(e => driver.FindElement(By.CssSelector("input#password")));
+        public IWebElement loginButton => driverWait.Until(e => driver.FindElement(By.CssSelector("input#login")));
+        public IWebElement emailPassDiv => driverWait.Until(e => driver.FindElement(By.CssSelector("div.login-password-container-email")));
 
 
         public override void Open(string part = "/login")
@@ -27,21 +27,21 @@ namespace TrelloCoreTest.PageObjects
 
         public void InputEmail(string email)
         {
-            email_input.SendKeys(email);
+            emailInput.SendKeys(email);
         }
 
         public void InputPassword(string pass)
         {
-            driverWait.Until(div_resized => ElementResizingEnded(email_pass_div));
-            password_input.SendKeys(pass);
+            driverWait.Until(divResized => ElementResizingEnded(emailPassDiv));
+            passwordInput.SendKeys(pass);
         }
 
         public void SubmitLogin()
         {
             //Changed waiting strategy for Trello login box
             WaitForAjax();
-            driverWait.Until(div_resized => ElementResizingEnded(email_pass_div) && login_button.Enabled && !password_input.Displayed);
-            login_button.Click();
+            driverWait.Until(divResized => ElementResizingEnded(emailPassDiv) && loginButton.Enabled && !passwordInput.Displayed);
+            loginButton.Click();
         }
     }
 }

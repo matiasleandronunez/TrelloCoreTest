@@ -20,7 +20,22 @@ namespace TrelloCoreTest.PageObjects
 
         public void InputPassword(string pass)
         {
-            driverWait.Until(rdy => passwordInput.Enabled && JSReady() && ElementResizingEnded(loginForm));
+            //Wait Until initial resize of login box to send input
+            driverWait.Until(rdy => {
+                    try
+                    {
+                        return passwordInput.Enabled && JSReady() && ElementResizingEnded(loginForm);
+                    }
+                    catch (StaleElementReferenceException)
+                    {
+                    /* In very low latency networks, and because both Trello and Atlassian SSO pages have the same password box id.
+                    WebDriver may confuse the previous input with the new page's input, hence triggering a Stale Element Reference Exception.
+                    To avoid this from disrupting the test, the exception is caught and lambda returns false; forcing calling FindElement once again
+                    after the old element is cleared from the DOM and the new password input is present*/
+                    return false;
+                    }
+                });
+            
             passwordInput.SendKeys(pass);
         }
 

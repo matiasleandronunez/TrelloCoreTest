@@ -53,7 +53,7 @@
 
                 try
                 {
-                    options.AddArguments(EnvironmentConfig.Instance.Browser_args);
+                    options.AddArguments(EnvironmentConfig.Instance.BrowserArgs);
                 }
                 catch (Exception)
                 {
@@ -84,7 +84,7 @@
 
                 try
                 {
-                    options.AddArguments(EnvironmentConfig.Instance.Browser_args);
+                    options.AddArguments(EnvironmentConfig.Instance.BrowserArgs);
                 }
                 catch (Exception)
                 {
@@ -169,8 +169,8 @@
             //Gets the browser tag of the test for crossbrowser testing to set options before instantiating driver, defaults to chrome
             scenarioContext.TryGetValue("Browser", out var browser);
 
-            //Switch browser and set options
-            //These are examples for local, grid and cloud (Browserstack) browsers 
+            /*Switch browser and set options
+              These are examples for local, grid and cloud (Browserstack) browsers */
             switch (browser)
             {
                 case "BrowserStack_iOS11":
@@ -281,8 +281,8 @@
             }
         }
 
-        //Add tags of scenarios that are developed or waiting fix, so they don't report falsely as failed.
-        //To be used as per SDET's discretion
+        /*Add tags of scenarios that are developed or waiting fix, so they don't report falsely as failed.
+          To be used as per SDET's discretion */
         [BeforeScenario(Order = 0)]
         public void ScenariosWithPendingTicketsOrNotImplementedYet()
         {
