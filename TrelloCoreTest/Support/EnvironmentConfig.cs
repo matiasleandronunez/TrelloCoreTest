@@ -26,12 +26,12 @@ namespace TrelloCoreTest.Support
 
         EnvironmentConfig()
         {
-            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase).Replace(Path.Combine("bin", "Debug", "netcoreapp3.1").ToString(), "");
+            var path = Directory.GetCurrentDirectory().Replace(Path.Combine("bin", "Debug", "netcoreapp3.1").ToString(), "");
 
             try
             {
                 var dobj = JsonConvert.DeserializeObject<dynamic>(
-                    System.IO.File.ReadAllText(new Uri(Path.Combine(path, "environmentconfig.json")).LocalPath));
+                    System.IO.File.ReadAllText(Path.Combine(path, "environmentconfig.json")));
 
                 baseUrl = dobj.appSettings.BASE_URL.ToString();
                 adminUser = dobj.users.admin.Email.ToString();
