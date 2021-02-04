@@ -13,4 +13,37 @@ Updated on 31 Jan 2021. All dependencies installed from NuGet for easy managemen
 # Credentials Cofiguration
 Input your Trello API tokens and the Atlassian managed account for UI login in environmentconfig.json
 
+Sample:
+```
+{
+  "appSettings": {
+    "BASE_URL": "https://trello.com"
+  },
+  "users": {
+    "admin": {
+      "UserName": "mytrellousername",
+      "Email": "mytrelloemail@example.com",
+      "Password": "mytrellopassword"
+    }
+  },
+  "api": {
+    "uri": "https://api.trello.com",
+    "key": "the32hexcharsapikeyyougotfromtrelloapi",
+    "token": "the64hexcharstoken",
+    "oauthsecret": "the64hexcharsoauthsecret"
+  },
+  "browser": [
+
+  ],
+  "selenium_grid": {
+    "RemoteHubURI": "http://192.168.1.100:4444/wd/hub"
+  },
+  "browserstack": {
+    "USERNAME": "yourbsusername",
+    "AUTOMATE_KEY": "yourbsautomationkey"
+  }
+}
+
+```
+
 Now with the multibrowser support, you can also try cloud, grid, different local browsers!
