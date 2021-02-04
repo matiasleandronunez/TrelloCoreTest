@@ -225,10 +225,10 @@
             switch (browser)
             {
                 case "BrowserStack_iOS11":
-                    var bs_ios11 = scenarioContext.Get<SafariOptions>("options");
+                    var browserstackIOS11 = scenarioContext.Get<SafariOptions>("options");
 
                     Driver = new RemoteWebDriver(
-                            new Uri("https://hub-cloud.browserstack.com/wd/hub/"), bs_ios11);
+                            new Uri("https://hub-cloud.browserstack.com/wd/hub/"), browserstackIOS11);
 
                     try
                     {

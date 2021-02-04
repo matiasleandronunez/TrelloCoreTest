@@ -11,20 +11,20 @@ namespace TrelloCoreTest.PageObjects
 {
     public class BasePage
     {
-        protected IWebDriver _driver;
-        protected WebDriverWait _driverWait;
+        protected IWebDriver driver;
+        protected WebDriverWait driverWait;
 
         public BasePage(IWebDriver driver)
         {
-            _driver = driver;
-            _driverWait = new WebDriverWait(driver, new System.TimeSpan(0, 0, 0, 30, 0));
+            this.driver = driver;
+            driverWait = new WebDriverWait(driver, new System.TimeSpan(0, 0, 0, 30, 0));
         }
 
         public virtual bool ValidatePage()
         {
             /// <summary>Validates the page displayed by the browser matches the Page Object element in use. If not overriden by a PO's particular implementation, it will only wait and check for the URI to match the Base URI of that particular page</summary>
             //if current URI without parameters matches base URI
-            return _driverWait.Until(url => _driver.Url.Split('?')[0] == Url);
+            return driverWait.Until(url => driver.Url.Split('?')[0] == Url);
         }
 
         public virtual string PageName()
@@ -37,22 +37,22 @@ namespace TrelloCoreTest.PageObjects
         {
             get
             {
-                return EnvironmentConfig.Instance.Base_url;
+                return EnvironmentConfig.Instance.BaseURL;
             }
         }
 
         //Static variable to be set once for classes inheriting from BasePage after original Open
-        protected static long Browser_width { get; set; }
+        protected static long browserWidth { get; set; }
         protected void SetBrowserWidth()
         {
             try
             {
-                IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
-                Browser_width = (long)js.ExecuteScript("return $('html > body').width()");
+                IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+                browserWidth = (long)js.ExecuteScript("return $('html > body').width()");
             }
             catch (WebDriverException)
             {
-                Browser_width = _driver.Manage().Window.Size.Width;
+                browserWidth = driver.Manage().Window.Size.Width;
             }
         }
 
@@ -66,7 +66,7 @@ namespace TrelloCoreTest.PageObjects
             //Method not implemented for some browsers, ignore maximize for those
             try
             {
-                _driver.Manage().Window.Maximize();
+                driver.Manage().Window.Maximize();
             }
             catch (NotImplementedException)
             {
@@ -75,21 +75,21 @@ namespace TrelloCoreTest.PageObjects
             {
             }
 
-            _driver.Navigate().GoToUrl(string.Concat(Url, part));
+            driver.Navigate().GoToUrl(string.Concat(Url, part));
 
             SetBrowserWidth();
         }
 
         protected void WaitForAjax()
         {
-            _driverWait.Until(rdy => JSReady() && JQueryReady());
+            driverWait.Until(rdy => JSReady() && JQueryReady());
         }
 
         protected bool JSReady()
         {
             try
             {
-                return (bool)(_driver as IJavaScriptExecutor).ExecuteScript("return document.readyState == 'complete'");
+                return (bool)(driver as IJavaScriptExecutor).ExecuteScript("return document.readyState == 'complete'");
             }
             catch (Exception)
             {
@@ -101,7 +101,7 @@ namespace TrelloCoreTest.PageObjects
         {
             try
             {
-                return (bool)(_driver as IJavaScriptExecutor).ExecuteScript("return jQuery.active == 0");
+                return (bool)(driver as IJavaScriptExecutor).ExecuteScript("return jQuery.active == 0");
             }
             catch (Exception)
             {
@@ -113,7 +113,7 @@ namespace TrelloCoreTest.PageObjects
         {
             var siz = e.Size;
             var siz2 = e.Size;
-            return _driverWait.Until(r => {
+            return driverWait.Until(r => {
                 siz2 = e.Size;
                 if (siz == siz2) { return true; } else { siz = siz2; return false; }
             });

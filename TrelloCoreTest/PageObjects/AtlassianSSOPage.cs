@@ -14,19 +14,19 @@ namespace TrelloCoreTest.PageObjects
         {
         }
 
-        public IWebElement password_input => _driverWait.Until(e => _driver.FindElement(By.CssSelector("input#password")));
-        public IWebElement login_button => _driverWait.Until(e => _driver.FindElement(By.CssSelector("button#login-submit")));
-        public IWebElement login_form => _driverWait.Until(e => _driver.FindElement(By.CssSelector("form#form-login")));
+        public IWebElement passwordInput => driverWait.Until(e => driver.FindElement(By.CssSelector("input#password")));
+        public IWebElement loginButton => driverWait.Until(e => driver.FindElement(By.CssSelector("button#login-submit")));
+        public IWebElement loginForm => driverWait.Until(e => driver.FindElement(By.CssSelector("form#form-login")));
 
         public void InputPassword(string pass)
         {
-            _driverWait.Until(rdy => password_input.Enabled && JSReady() && ElementResizingEnded(login_form));
-            password_input.SendKeys(pass);
+            driverWait.Until(rdy => passwordInput.Enabled && JSReady() && ElementResizingEnded(loginForm));
+            passwordInput.SendKeys(pass);
         }
 
         public void SubmitLogin()
         {
-            login_button.Click();
+            loginButton.Click();
         }
     }
 }

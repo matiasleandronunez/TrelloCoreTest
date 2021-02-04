@@ -16,7 +16,7 @@ namespace TrelloCoreTest.PageObjects
         {
         }
 
-        public IWebElement all_boards_div => _driverWait.Until(e => _driver.FindElement(By.CssSelector("div.content-all-boards")));
+        public IWebElement all_boards_div => driverWait.Until(e => driver.FindElement(By.CssSelector("div.content-all-boards")));
 
         public override void Open(string part = "/boards")
         {
@@ -25,7 +25,7 @@ namespace TrelloCoreTest.PageObjects
 
         public void ClickOnBoard(string board_name)
         {
-            _driverWait.Until(board => all_boards_div.FindElements(By.CssSelector($"a.board-tile[href$='/{Regex.Replace(board_name, @"\s", "-").ToLower()}']")))
+            driverWait.Until(board => all_boards_div.FindElements(By.CssSelector($"a.board-tile[href$='/{Regex.Replace(board_name, @"\s", "-").ToLower()}']")))
                 .First()
                 .Click();
         }

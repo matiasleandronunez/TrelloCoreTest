@@ -61,13 +61,13 @@ namespace TrelloCoreTest.Support
             }
         }
 
-        public string Base_url { get => baseUrl; set => baseUrl = value; }
+        public string BaseURL { get => baseUrl; set => baseUrl = value; }
         public string Username { get => userName; set => userName = value; }
         public (string Username, string Password) AdminUser
         {
             get => (adminUser, adminPassword);
         }
-        public string Api_uri { get => apiUri; set => apiUri = value; }
+        public string ApiURI { get => apiUri; set => apiUri = value; }
         public string ApiKey { get => apiKey; set => apiKey = value; }
         public string ApiToken { get => apiToken; set => apiToken = value; }
         public string ApiOAuth { get => oauth; set => oauth = value; }

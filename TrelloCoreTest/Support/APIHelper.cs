@@ -19,7 +19,7 @@ namespace TrelloCoreTest.Support
 
         public APIHelper()
         {
-            client = new RestClient(EnvironmentConfig.Instance.Api_uri);
+            client = new RestClient(EnvironmentConfig.Instance.ApiURI);
         }
 
         public string AuthenticationString()

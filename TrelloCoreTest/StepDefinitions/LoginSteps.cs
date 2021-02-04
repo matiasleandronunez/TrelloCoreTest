@@ -9,16 +9,16 @@ namespace TrelloCoreTest.StepDefinitions
     [Binding, Parallelizable]
     public class LoginSteps
     {
-        private LoginPage LoginPage => new LoginPage(_driver);
-        private AtlassianSSOPage AtlassianSSOPage => new AtlassianSSOPage(_driver);
+        private LoginPage LoginPage => new LoginPage(driver);
+        private AtlassianSSOPage AtlassianSSOPage => new AtlassianSSOPage(driver);
 
-        private IWebDriver _driver;
-        private ScenarioContext _scenarioContext;
+        private IWebDriver driver;
+        private ScenarioContext scenarioContext;
 
         public LoginSteps(IWebDriver driver, ScenarioContext scenarioContext)
         {
-            _driver = driver;
-            _scenarioContext = scenarioContext;
+            this.driver = driver;
+            this.scenarioContext = scenarioContext;
         }
 
         [Given(@"I navigate to Trello login page")]

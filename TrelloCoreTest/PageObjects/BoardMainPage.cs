@@ -15,8 +15,8 @@ namespace TrelloCoreTest.PageObjects
         {
         }
 
-        public IReadOnlyCollection<IWebElement> all_lists_div => _driverWait.Until(e => _driver.FindElements(By.CssSelector("div.js-list-content")));
-        public IWebElement board_canvas_div => _driverWait.Until(e => _driver.FindElement(By.CssSelector("div.board-canvas")));
+        public IReadOnlyCollection<IWebElement> all_lists_div => driverWait.Until(e => driver.FindElements(By.CssSelector("div.js-list-content")));
+        public IWebElement board_canvas_div => driverWait.Until(e => driver.FindElement(By.CssSelector("div.board-canvas")));
 
         public string GetFirstLeftHandSideListName()
         {
@@ -27,7 +27,7 @@ namespace TrelloCoreTest.PageObjects
 
         public IWebElement GetFirstLeftHandSideList()
         {
-            _driverWait.Until(lists_loaded => all_lists_div.Count != 0);
+            driverWait.Until(lists_loaded => all_lists_div.Count != 0);
 
             return all_lists_div
                 .First();
@@ -35,7 +35,7 @@ namespace TrelloCoreTest.PageObjects
 
         public IWebElement GetListByName(string lname)
         {
-            return _driverWait.Until(list => board_canvas_div.FindElement(By.XPath($".//textarea[text()='{lname}']/ancestor::div[contains(@class,'js-list-content')]")));
+            return driverWait.Until(list => board_canvas_div.FindElement(By.XPath($".//textarea[text()='{lname}']/ancestor::div[contains(@class,'js-list-content')]")));
         }
 
         public void AddCardToList(string card_title, string list_name = null)
@@ -48,10 +48,10 @@ namespace TrelloCoreTest.PageObjects
                     .FindElement(By.CssSelector("a.open-card-composer"))
                     .Click();
 
-            _driverWait.Until(input_rdy => list_wrapper.FindElement(By.CssSelector("textarea.list-card-composer-textarea")))
+            driverWait.Until(input_rdy => list_wrapper.FindElement(By.CssSelector("textarea.list-card-composer-textarea")))
                 .SendKeys(card_title);
 
-            _driverWait.Until(button => list_wrapper.FindElement(By.CssSelector("input.js-add-card")))
+            driverWait.Until(button => list_wrapper.FindElement(By.CssSelector("input.js-add-card")))
                 .Click();
         }
 
@@ -59,7 +59,7 @@ namespace TrelloCoreTest.PageObjects
         {
             /// Return a list of all card titles displayed within a list
             /// 
-            var cards = _driverWait.Until(cs => GetListByName(list_name).FindElements(By.CssSelector("a.list-card")));
+            var cards = driverWait.Until(cs => GetListByName(list_name).FindElements(By.CssSelector("a.list-card")));
 
             return cards.Select(c_title => c_title.FindElement(By.CssSelector("span.list-card-title")).Text)
                 .ToList<string>();

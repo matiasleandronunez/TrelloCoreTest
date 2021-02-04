@@ -14,10 +14,10 @@ namespace TrelloCoreTest.PageObjects
         {
         }
 
-        public IWebElement email_input => _driverWait.Until(e => _driver.FindElement(By.CssSelector("input#user")));
-        public IWebElement password_input => _driverWait.Until(e => _driver.FindElement(By.CssSelector("input#password")));
-        public IWebElement login_button => _driverWait.Until(e => _driver.FindElement(By.CssSelector("input#login")));
-        public IWebElement email_pass_div => _driverWait.Until(e => _driver.FindElement(By.CssSelector("div.login-password-container-email")));
+        public IWebElement email_input => driverWait.Until(e => driver.FindElement(By.CssSelector("input#user")));
+        public IWebElement password_input => driverWait.Until(e => driver.FindElement(By.CssSelector("input#password")));
+        public IWebElement login_button => driverWait.Until(e => driver.FindElement(By.CssSelector("input#login")));
+        public IWebElement email_pass_div => driverWait.Until(e => driver.FindElement(By.CssSelector("div.login-password-container-email")));
 
 
         public override void Open(string part = "/login")
@@ -32,7 +32,7 @@ namespace TrelloCoreTest.PageObjects
 
         public void InputPassword(string pass)
         {
-            _driverWait.Until(div_resized => ElementResizingEnded(email_pass_div));
+            driverWait.Until(div_resized => ElementResizingEnded(email_pass_div));
             password_input.SendKeys(pass);
         }
 
@@ -40,7 +40,7 @@ namespace TrelloCoreTest.PageObjects
         {
             //Changed waiting strategy for Trello login box
             WaitForAjax();
-            _driverWait.Until(div_resized => ElementResizingEnded(email_pass_div) && login_button.Enabled && !password_input.Displayed);
+            driverWait.Until(div_resized => ElementResizingEnded(email_pass_div) && login_button.Enabled && !password_input.Displayed);
             login_button.Click();
         }
     }

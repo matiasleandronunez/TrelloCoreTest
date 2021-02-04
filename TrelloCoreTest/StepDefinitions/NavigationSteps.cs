@@ -9,15 +9,15 @@ namespace TrelloCoreTest.StepDefinitions
     [Binding, Parallelizable]
     public class NavigateSteps
     {
-        private BoardsDashboardPage BoardsDashboardPage => new BoardsDashboardPage(_driver);
+        private BoardsDashboardPage BoardsDashboardPage => new BoardsDashboardPage(driver);
 
-        private IWebDriver _driver;
-        private ScenarioContext _scenarioContext;
+        private IWebDriver driver;
+        private ScenarioContext scenarioContext;
 
         public NavigateSteps(IWebDriver driver, ScenarioContext scenarioContext)
         {
-            _driver = driver;
-            _scenarioContext = scenarioContext;
+            this.driver = driver;
+            this.scenarioContext = scenarioContext;
         }
 
         [When(@"I open a trello board")]
