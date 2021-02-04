@@ -19,12 +19,12 @@ namespace TrelloCoreTest.Support
 
         DataDrivenTestHelper()
         {
-            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase).Replace("\\bin\\Debug\\netcoreapp3.1", "");
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase).Replace(Path.Combine("bin","Debug","netcoreapp3.1").ToString(), "");
 
             try
             {
                 var dobj = JsonConvert.DeserializeObject<dynamic>(
-                    System.IO.File.ReadAllText(new Uri($"{path}\\testdata.json").LocalPath));
+                    System.IO.File.ReadAllText(new Uri(Path.Combine(path, "testdata.json")).LocalPath));
 
                 board1ToCreate = dobj.TESTDATA.Preconditions.Board1ToCreate.ToString();
                 board1ListsToCreate = JsonConvert.DeserializeObject<List<string>>(dobj.TESTDATA.Preconditions.Board1ListsToCreate.ToString());
