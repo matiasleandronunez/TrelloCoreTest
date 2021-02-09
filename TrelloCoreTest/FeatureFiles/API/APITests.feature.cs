@@ -74,15 +74,15 @@ namespace TrelloCoreTest.FeatureFiles.API
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Create a new Card in a Board through the API: Headless")]
-        [NUnit.Framework.CategoryAttribute("Browser:Headless")]
-        public virtual void CreateANewCardInABoardThroughTheAPI_Headless()
+        [NUnit.Framework.DescriptionAttribute("Create a new Card in a Board through the API: Grid_Chrome_Headless")]
+        [NUnit.Framework.CategoryAttribute("Browser:Grid_Chrome_Headless")]
+        public virtual void CreateANewCardInABoardThroughTheAPI_Grid_Chrome_Headless()
         {
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new Card in a Board through the API", null, new string[] {
-                        "Browser:Headless"}, argumentsOfScenario);
+                        "Browser:Grid_Chrome_Headless"}, argumentsOfScenario);
             this.ScenarioInitialize(scenarioInfo);
-            testRunner.ScenarioContext.Add("Browser", "Headless");
+            testRunner.ScenarioContext.Add("Browser", "Grid_Chrome_Headless");
             this.ScenarioStart();
             testRunner.Given("I create a new card in the first list of a board through the api", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
             testRunner.Then("the card is successfully created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

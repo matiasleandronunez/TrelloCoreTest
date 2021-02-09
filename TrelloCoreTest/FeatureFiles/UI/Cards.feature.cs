@@ -74,16 +74,16 @@ namespace TrelloCoreTest.FeatureFiles.UI
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Create a new Card in a Board: Chrome")]
-        [NUnit.Framework.CategoryAttribute("Browser:Chrome")]
-        public virtual void CreateANewCardInABoard_Chrome()
+        [NUnit.Framework.DescriptionAttribute("Create a new Card in a Board: Grid_Chrome")]
+        [NUnit.Framework.CategoryAttribute("Browser:Grid_Chrome")]
+        public virtual void CreateANewCardInABoard_Grid_Chrome()
         {
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new Card in a Board", null, new string[] {
-                        "Browser:Chrome",
-                        "Browser:Firefox"}, argumentsOfScenario);
+                        "Browser:Grid_Chrome",
+                        "Browser:Grid_Firefox"}, argumentsOfScenario);
             this.ScenarioInitialize(scenarioInfo);
-            testRunner.ScenarioContext.Add("Browser", "Chrome");
+            testRunner.ScenarioContext.Add("Browser", "Grid_Chrome");
             this.ScenarioStart();
             testRunner.Given("I log into Trello as an admin with an Atlassian Account", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
             testRunner.When("I open a trello board", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -93,16 +93,16 @@ namespace TrelloCoreTest.FeatureFiles.UI
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Create a new Card in a Board: Firefox")]
-        [NUnit.Framework.CategoryAttribute("Browser:Firefox")]
-        public virtual void CreateANewCardInABoard_Firefox()
+        [NUnit.Framework.DescriptionAttribute("Create a new Card in a Board: Grid_Firefox")]
+        [NUnit.Framework.CategoryAttribute("Browser:Grid_Firefox")]
+        public virtual void CreateANewCardInABoard_Grid_Firefox()
         {
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create a new Card in a Board", null, new string[] {
-                        "Browser:Chrome",
-                        "Browser:Firefox"}, argumentsOfScenario);
+                        "Browser:Grid_Chrome",
+                        "Browser:Grid_Firefox"}, argumentsOfScenario);
             this.ScenarioInitialize(scenarioInfo);
-            testRunner.ScenarioContext.Add("Browser", "Firefox");
+            testRunner.ScenarioContext.Add("Browser", "Grid_Firefox");
             this.ScenarioStart();
             testRunner.Given("I log into Trello as an admin with an Atlassian Account", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
             testRunner.When("I open a trello board", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

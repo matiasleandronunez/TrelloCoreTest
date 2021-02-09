@@ -38,7 +38,7 @@
         {
             //This pre-requesite step will set options for the various browsers types. As selenium 3, this is per browser. 
             
-            ChromeOptions SetChromeOptions(string[] parameters = null, Dictionary<string, object> extraAdditionalCaps = null)
+            ChromeOptions SetChromeOptions(string version = "", string[] parameters = null, Dictionary<string, object> extraAdditionalCaps = null)
             {
                 var options = new ChromeOptions();
 
@@ -51,6 +51,7 @@
                 options.AddArgument("disable-infobars");
                 options.SetLoggingPreference(LogType.Browser, LogLevel.Severe);
 
+                
                 try
                 {
                     options.AddArguments(EnvironmentConfig.Instance.BrowserArgs);
@@ -58,6 +59,11 @@
                 catch (Exception)
                 {
                     //
+                }
+
+                if(!String.IsNullOrEmpty(version))
+                {
+                    options.BrowserVersion = version;
                 }
 
                 if (parameters != null)
@@ -200,11 +206,18 @@
 
                     scenarioContext.Add("options", gridOperaBlinkOptions);
                     break;
+                case "Grid_Chrome_Headless":
+                    scenarioContext.Add("options", SetChromeOptions(version: "87.0.4280.88", parameters: new string[] { "headless" }));
+                    break;
                 case "Headless":
                     scenarioContext.Add("options", SetChromeOptions(parameters: new string[] {"headless"}));
                     break;
+                case "Grid_Firefox":
                 case "Firefox":
                     scenarioContext.Add("options", SetFirefoxOptions());
+                    break;
+                case "Grid_Chrome":
+                    scenarioContext.Add("options", SetChromeOptions(version: "87.0.4280.88"));
                     break;
                 case "Chrome":
                 default:
@@ -252,6 +265,23 @@
                     var op = scenarioContext.Get<DesiredCapabilities>("options");
 
                     Driver = new RemoteWebDriver(EnvironmentConfig.Instance.SGrid.RemoteHubURI, op);
+
+                    Driver.Manage().Cookies.DeleteAllCookies();
+                    objectContainer.RegisterInstanceAs(Driver);
+                    break;
+                case "Grid_Firefox":
+                    var gffo = scenarioContext.Get<FirefoxOptions>("options");
+
+                    Driver = new RemoteWebDriver(EnvironmentConfig.Instance.SGrid.RemoteHubURI, gffo);
+
+                    Driver.Manage().Cookies.DeleteAllCookies();
+                    objectContainer.RegisterInstanceAs(Driver);
+                    break;
+                case "Grid_Chrome_Headless":
+                case "Grid_Chrome":
+                    var gco = scenarioContext.Get<ChromeOptions>("options");
+
+                    Driver = new RemoteWebDriver(EnvironmentConfig.Instance.SGrid.RemoteHubURI, gco);
 
                     Driver.Manage().Cookies.DeleteAllCookies();
                     objectContainer.RegisterInstanceAs(Driver);

@@ -4,8 +4,8 @@ Feature: Cards
 	As a user
 	I want to be able to manage cards in Trello
 
-@Browser:Chrome
-@Browser:Firefox
+@Browser:Grid_Chrome
+@Browser:Grid_Firefox
 Scenario: Create a new Card in a Board
 	Given I log into Trello as an admin with an Atlassian Account
 	When I open a trello board
