@@ -68,6 +68,12 @@ Once the tests are run, copy the results into the host machine with:
 docker cp <friendly_name>:/src/TestResults/ ./
 ```
 
+Alternatively, you can deploy a minimum grid with a Firefox and Chrome node and the build machine with a single command, by composing file TrelloCoreTest
+/docker-compose.yml with:
+```
+docker-compose up --build
+```
+
 # Multibrowser support
 Now with the multibrowser support, you can also try cloud, grid, different local browsers!
 
