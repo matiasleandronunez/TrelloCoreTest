@@ -207,7 +207,7 @@
                     scenarioContext.Add("options", gridOperaBlinkOptions);
                     break;
                 case "Grid_Chrome_Headless":
-                    scenarioContext.Add("options", SetChromeOptions(version: "87.0.4280.88", parameters: new string[] { "headless" }));
+                    scenarioContext.Add("options", SetChromeOptions(version: "88.0.4324.96", parameters: new string[] { "headless" }));
                     break;
                 case "Headless":
                     scenarioContext.Add("options", SetChromeOptions(parameters: new string[] {"headless"}));
@@ -217,7 +217,7 @@
                     scenarioContext.Add("options", SetFirefoxOptions());
                     break;
                 case "Grid_Chrome":
-                    scenarioContext.Add("options", SetChromeOptions(version: "87.0.4280.88"));
+                    scenarioContext.Add("options", SetChromeOptions(version: "88.0.4324.96"));
                     break;
                 case "Chrome":
                 default:
