@@ -1,0 +1,68 @@
+version: "3"
+
+services:
+
+  selenium-hub:
+
+    image: selenium/hub:latest
+
+    container_name: selenium-hub
+
+    ports:
+
+      - "4444:4444"
+
+  chrome-debug:
+
+    image: selenium/node-chrome-debug:latest
+
+    container_name: chrome_latest
+
+    volumes:
+
+      - /dev/shm:/dev/shm
+
+    depends_on:
+
+      - selenium-hub
+
+    environment:
+
+      - HUB_HOST=selenium-hub
+
+      - HUB_PORT=4444
+
+    ports:
+
+      - "5900:5900"
+
+  firefox-debug:
+
+    image: selenium/node-firefox-debug:latest
+
+    container_name: "firefox_latest"
+
+    volumes:
+
+      - /dev/shm:/dev/shm
+
+    depends_on:
+
+      - selenium-hub
+
+    environment:
+
+      - HUB_HOST=selenium-hub
+
+      - HUB_PORT=4444
+
+    ports:
+
+      - "5901:5900"
+
+  build-machine:
+    build: . 
+    depends_on:
+      - selenium-hub
+      - firefox-debug
+      - chrome-debug
