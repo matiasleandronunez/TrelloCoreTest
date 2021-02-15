@@ -14,7 +14,7 @@ services:
 
   chrome-debug:
 
-    image: selenium/node-chrome-debug:latest
+    image: selenium/node-chrome-debug:3.141.59-20210128
 
     container_name: chrome_latest
 
@@ -38,7 +38,7 @@ services:
 
   firefox-debug:
 
-    image: selenium/node-firefox-debug:latest
+    image: selenium/node-firefox-debug:3.141.59-20210128
 
     container_name: "firefox_latest"
 
