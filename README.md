@@ -74,7 +74,7 @@ Alternatively, you can deploy a minimum grid with a Firefox and Chrome node and 
 docker-compose up --build
 ```
 
-IMPORTANT: Bear in mind that if selenium-hub is running in the same machine as the container that's running the tests you may have specify docker's selenium hub IP in the environment configuration file, this would look like 
+IMPORTANT: Bear in mind that if selenium-hub is running in the same machine as the container that's running the tests you may have to specify docker's selenium hub IP in the environment configuration file, this would look like 
 ```
 "selenium_grid": {
     "RemoteHubURI": "http://172.18.0.2:4444/wd/hub"
