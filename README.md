@@ -48,7 +48,12 @@ Sample:
 
 # Build and run completely in docker containers!
 
-NOTE: Keep in mind that the tests are pointed to run in Selenium3 Grid Chrome and Firefox out of the box. You'll need to deploy the grid ([Refer to grid readme file](https://github.com/matiasleandronunez/TrelloCoreTest/blob/master/README_SELENIUM_GRID_SETUP.md)) or manually change before building the image. The parameters JSON must also be configured before building the image.
+NOTE: Keep in mind that the tests are pointed to run in Selenium3 Grid Chrome and Firefox out of the box. You'll need to deploy the grid ([Refer to grid readme file](https://github.com/matiasleandronunez/TrelloCoreTest/blob/master/README_SELENIUM_GRID_SETUP.md)) or manually change before building the image. The parameters JSON must also be configured before building the image. If selenium-hub is running in the same machine as the container that's running the tests (out of the box default) depending on your host's network configuration you may have to specify docker's selenium hub IP in the environment configuration file instead of using localhost, this would look like: 
+```
+    "RemoteHubURI": "http://172.18.0.2:4444/wd/hub"
+```
+Refer to ([Refer to docker IP documentation](https://docs.docker.com/machine/reference/ip/))
+
 
 To build and run the tests in docker, first you need to build the image using the docker compose command. Assuming you're currently in solution's directory:
 ```
@@ -74,13 +79,6 @@ Alternatively, you can deploy a minimum grid with a Firefox and Chrome node and 
 docker-compose up --build
 ```
 
-IMPORTANT: Bear in mind that if selenium-hub is running in the same machine as the container that's running the tests you may have to specify docker's selenium hub IP in the environment configuration file, this would look like 
-```
-"selenium_grid": {
-    "RemoteHubURI": "http://172.18.0.2:4444/wd/hub"
-  },
-```
-Refer to https://docs.docker.com/machine/reference/ip/
 
 # Multibrowser support
 Now with the multibrowser support, you can also try cloud, grid, different local browsers!
